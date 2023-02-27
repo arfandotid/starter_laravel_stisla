@@ -19,29 +19,28 @@
 
                         <div class="card-body">
                             <p class="text-muted">We will send a link to reset your password</p>
-                            <form method="POST">
+                            <form method="POST" action="{{ route('password.update') }}">
+                                @csrf
+                                <input type="hidden" name="token" value="{{ request()->token }}">
+                                <input type="hidden" name="email" value="{{ request()->email }}">
                                 <div class="form-group">
-                                    <label for="email">Email</label>
-                                    <input id="email" type="email" class="form-control" name="email" tabindex="1"
-                                        required autofocus>
+                                    <label for="password" class="d-block">New Password</label>
+                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password">
+                                    @error('password')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
-
                                 <div class="form-group">
-                                    <label for="password">New Password</label>
-                                    <input id="password" type="password" class="form-control pwstrength"
-                                        data-indicator="pwindicator" name="password" tabindex="2" required>
-                                    <div id="pwindicator" class="pwindicator">
-                                        <div class="bar"></div>
-                                        <div class="label"></div>
-                                    </div>
+                                    <label for="password_confirmation" class="d-block">Password Confirmation</label>
+                                    <input id="password_confirmation" type="password" class="form-control @error('password_confirmation') is-invalid @enderror" name="password_confirmation">
+                                    @error('password_confirmation')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
-
-                                <div class="form-group">
-                                    <label for="password-confirm">Confirm Password</label>
-                                    <input id="password-confirm" type="password" class="form-control"
-                                        name="confirm-password" tabindex="2" required>
-                                </div>
-
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
                                         Reset Password
@@ -51,7 +50,7 @@
                         </div>
                     </div>
                     <div class="simple-footer">
-                        Copyright &copy; Stisla 2018
+                        Copyright {{ date('Y') }} &copy; {{ env('APP_NAME') }} &bull; Theme by Stisla
                     </div>
                 </div>
             </div>
