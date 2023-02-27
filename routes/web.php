@@ -17,18 +17,14 @@ Route::get('/', function () {
     return view('pages.dashboard');
 });
 
-Route::get('/auth', function () {
-    return view('pages.auth.login');
-})->name('login');
+// Route::get('/register', function () {
+//     return view('pages.auth.register');
+// })->name('register');
 
-Route::get('/register', function () {
-    return view('pages.auth.register');
-})->name('register');
+// Route::get('/forgot', function () {
+//     return view('pages.auth.forgot');
+// })->name('forgot');
 
-Route::get('/forgot', function () {
-    return view('pages.auth.forgot');
-})->name('forgot');
-
-Route::get('/reset', function () {
-    return view('pages.auth.reset');
-})->name('reset');
+// Route::get('/reset', function () {
+//     return view('pages.auth.reset');
+// })->name('reset');
