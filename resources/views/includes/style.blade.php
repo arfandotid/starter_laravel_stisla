@@ -7,3 +7,12 @@
 <!-- Template CSS -->
 <link rel="stylesheet" href="../assets/css/style.css">
 <link rel="stylesheet" href="../assets/css/components.css">
+
+<!-- Custom CSS -->
+<style type="text/css">
+    .navbar .dropdown-item.has-icon i{
+        line-height: inherit;
+    }
+</style>
+
+
