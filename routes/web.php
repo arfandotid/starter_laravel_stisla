@@ -20,17 +20,5 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified'])->group(function() {
     Route::get('/dashboard', function () {
         return view('pages.dashboard');
-    })->name('dashboard');
+    })->name('dashboard')->middleware('can:dashboard');
 });
-
-// Route::get('/register', function () {
-//     return view('pages.auth.register');
-// })->name('register');
-
-// Route::get('/forgot', function () {
-//     return view('pages.auth.forgot');
-// })->name('forgot');
-
-// Route::get('/reset', function () {
-//     return view('pages.auth.reset');
-// })->name('reset');
