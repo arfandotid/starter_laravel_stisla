@@ -20,5 +20,11 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified'])->group(function() {
     Route::get('/dashboard', function () {
         return view('pages.dashboard');
-    })->name('dashboard')->middleware('can:dashboard');
+    })->name('dashboard');
+
+    Route::middleware(['can:admin'])->group(function() {
+        Route::get('/user', function() {
+            return 'user manage';
+        });
+    });
 });
