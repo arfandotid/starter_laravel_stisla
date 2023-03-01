@@ -15,12 +15,17 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('pages.auth.login');
-});
+})->middleware(['guest']);
 
 Route::middleware(['auth', 'verified'])->group(function() {
     Route::get('/dashboard', function () {
         return view('pages.dashboard');
     })->name('dashboard');
+
+    Route::get('/profile', function () {
+        return view('pages.profile');
+    })->name('profile');
+
 
     Route::middleware(['can:admin'])->group(function() {
         Route::get('/user', function() {
