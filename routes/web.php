@@ -22,6 +22,11 @@ Route::middleware(['auth', 'verified'])->group(function() {
         return view('pages.dashboard');
     })->name('dashboard');
 
+    Route::get('/profile', function () {
+        return view('pages.profile');
+    })->name('profile');
+
+
     Route::middleware(['can:admin'])->group(function() {
         Route::get('/user', function() {
             return 'user manage';

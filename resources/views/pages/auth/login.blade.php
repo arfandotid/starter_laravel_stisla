@@ -21,8 +21,8 @@
                             <form method="POST" action="{{ route('login') }}" autocomplete="off">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="email">Email</label>
-                                    <input id="email" type="email"
+                                    <label for="email">Email/Username</label>
+                                    <input id="email" type="text"
                                         class="form-control @error('email') is-invalid @enderror" name="email"
                                         tabindex="1" autofocus>
                                     @error('email')
