@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,10 +27,7 @@ Route::middleware(['auth', 'verified'])->group(function() {
         return view('pages.profile');
     })->name('profile');
 
-
     Route::middleware(['can:admin'])->group(function() {
-        Route::get('/user', function() {
-            return 'user manage';
-        });
+        Route::resource('user', UserController::class);
     });
 });

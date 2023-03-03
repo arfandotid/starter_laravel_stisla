@@ -7,7 +7,93 @@
 <script src="../assets/js/stisla.js"></script>
 
 <!-- JS Libraies -->
+<script src="../assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
+<script src="../assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="../assets/vendor/datatables.net-select-bs4/js/select.bootstrap4.min.js"></script>
 
 <!-- Template JS File -->
 <script src="../assets/js/scripts.js"></script>
 <script src="../assets/js/custom.js"></script>
+
+<!-- Global JS -->
+<script type="text/javascript">
+    $(function() {
+        $('.table').on('click', '.btn-delete', function(e) {
+            e.preventDefault();
+            var form = $(this).parents('form');
+            Swal.fire({
+                title: 'Yakin ingin hapus?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus.'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings) {
+        return {
+            "iStart": oSettings._iDisplayStart,
+            "iEnd": oSettings.fnDisplayEnd(),
+            "iLength": oSettings._iDisplayLength,
+            "iTotal": oSettings.fnRecordsTotal(),
+            "iFilteredTotal": oSettings.fnRecordsDisplay(),
+            "iPage": Math.ceil(oSettings._iDisplayStart / oSettings._iDisplayLength),
+            "iTotalPages": Math.ceil(oSettings.fnRecordsDisplay() / oSettings._iDisplayLength)
+        };
+    };
+    $.fn.DataTable.ext.pager.numbers_length = 5;
+    $.extend(true, $.fn.dataTable.defaults, {
+        "language": {
+            "emptyTable": "Tidak ada data",
+            "lengthMenu": "_MENU_ baris perhalaman",
+            "zeroRecords": "Data kosong",
+            "info": "Halaman _PAGE_ dari _PAGES_",
+            "infoEmpty": "Data kosong",
+            "infoFiltered": "(Disaring dari _MAX_ total baris)",
+            "search": "Cari:",
+            "loadingRecords": "Loading...",
+            "processing": "Sedang Proses...",
+            "paginate": {
+                "first": "«",
+                "last": "»",
+                "next": "›",
+                "previous": "‹"
+            },
+        },
+    });
+</script>
+
+<script type="text/javascript">
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 1000,
+        timerProgressBar: false,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    });
+
+    const showToast = (msg, icon = "success") => {
+        Toast.fire({
+            icon: icon,
+            title: msg,
+        })
+    }
+</script>
+
+@if ($toast = Session::get('toast'))
+<script>
+    {!! $toast !!}
+</script>
+@endif
