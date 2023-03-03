@@ -7,6 +7,7 @@
 <script src="../assets/js/stisla.js"></script>
 
 <!-- JS Libraies -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
 <script src="../assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script src="../assets/vendor/datatables.net-select-bs4/js/select.bootstrap4.min.js"></script>

@@ -73,7 +73,7 @@
                         <div class="table-links">
                             <a href="#">Edit</a>
                             <div class="bullet"></div>
-                            <a href="#" class="text-danger">Delete</a>
+                            <a href="#" class="text-danger btn-delete">Delete</a>
                         </div>
                     `;
                 }
