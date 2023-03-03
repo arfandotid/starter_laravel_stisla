@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequest\Store;
+use App\Http\Requests\UserRequest\Update;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
@@ -14,7 +17,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         if($request->ajax()){
-            $query = User::get();
+            $query = User::whereNot('role', 'superadmin')->get();
             return DataTables::of($query)->make();
         }
 
@@ -26,15 +29,25 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.user.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Store $request)
     {
-        //
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'role' => $request->role,
+            'username' => $request->username,
+            'password' => Hash::make($request->password),
+        ];
+
+        User::create($data);
+
+        return redirect('user')->with('toast', 'showToast("Data berhasil disimpan")');
     }
 
     /**
@@ -50,15 +63,34 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $item = User::findOrFail($id);
+
+        return view('pages.user.edit',[
+            'item'  =>  $item
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Update $request, string $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'role' => $request->role,
+            'username' => $request->username,
+        ];
+
+        if($request->password){
+            $data['password'] = Hash::make($request->password);
+        }
+
+        $user->update($data);
+
+        return redirect('user')->with('toast', 'showToast("Data berhasil diupdate")');
     }
 
     /**
@@ -66,6 +98,9 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return redirect()->back()->with('toast', 'showToast("Data berhasil dihapus")');
     }
 }

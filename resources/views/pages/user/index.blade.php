@@ -70,11 +70,22 @@
                 "render": function(data, type, row, meta) {
                     return `
                         ${data}
-                        <div class="table-links">
-                            <a href="#">Edit</a>
-                            <div class="bullet"></div>
-                            <a href="#" class="text-danger btn-delete">Delete</a>
-                        </div>
+                        <form action="{{ url('/user') }}/${row.id}" method="POST" class="table-links">
+                            @method('DELETE')
+                            @csrf
+                            <a
+                                href="{{ url('/user') }}/${row.id}/edit"
+                                class="btn btn-sm"
+                            >
+                                Edit
+                            </a>
+                            <button
+                                type="submit"
+                                class="text-danger btn-delete btn btn-sm"
+                            >
+                                Delete
+                            </button>
+                        </form>
                     `;
                 }
             },{
@@ -96,28 +107,6 @@
                 var length = info.iLength;
                 var index = page * length + (iDisplayIndex + 1);
                 $('td:eq(0)', row).html(index);
-            },
-            initComplete: function () {
-                this.api()
-                    .columns([5])
-                    .every(function () {
-                        var column = this;
-                        var select = $('<select class="form-select form-select-sm"><option value="">-- Pilih --</option></select>')
-                            .appendTo($(column.footer()).empty())
-                            .on('change', function () {
-                                var val = $.fn.dataTable.util.escapeRegex($(this).val());
-
-                                column.search(val ? '^' + val + '$' : '', true, false).draw();
-                            });
-
-                        column
-                            .data()
-                            .unique()
-                            .sort()
-                            .each(function (d, j) {
-                                select.append('<option value="' + d + '">' + d + '</option>');
-                            });
-                    });
             },
         });
     });

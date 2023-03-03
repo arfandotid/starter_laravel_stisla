@@ -4,21 +4,37 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-<script src="../assets/js/stisla.js"></script>
+<script src="{{ asset('/assets/js/stisla.js') }}"></script>
 
 <!-- JS Libraies -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="../assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
-<script src="../assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
-<script src="../assets/vendor/datatables.net-select-bs4/js/select.bootstrap4.min.js"></script>
+<script src="{{ asset('/assets/vendor/datatables/media/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('/assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('/assets/vendor/datatables.net-select-bs4/js/select.bootstrap4.min.js') }}"></script>
 
 <!-- Template JS File -->
-<script src="../assets/js/scripts.js"></script>
-<script src="../assets/js/custom.js"></script>
+<script src="{{ asset('/assets/js/scripts.js') }}"></script>
+<script src="{{ asset('/assets/js/custom.js') }}"></script>
 
 <!-- Global JS -->
 <script type="text/javascript">
     $(function() {
+        $('.navbar-nav').on('click', '.btn-logout', function(e) {
+            e.preventDefault();
+            var form = $(this).parents('form');
+            Swal.fire({
+                title: 'Yakin ingin logout?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, logout.'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
         $('.table').on('click', '.btn-delete', function(e) {
             e.preventDefault();
             var form = $(this).parents('form');
@@ -53,15 +69,6 @@
     $.fn.DataTable.ext.pager.numbers_length = 5;
     $.extend(true, $.fn.dataTable.defaults, {
         "language": {
-            "emptyTable": "Tidak ada data",
-            "lengthMenu": "_MENU_ baris perhalaman",
-            "zeroRecords": "Data kosong",
-            "info": "Halaman _PAGE_ dari _PAGES_",
-            "infoEmpty": "Data kosong",
-            "infoFiltered": "(Disaring dari _MAX_ total baris)",
-            "search": "Cari:",
-            "loadingRecords": "Loading...",
-            "processing": "Sedang Proses...",
             "paginate": {
                 "first": "«",
                 "last": "»",
