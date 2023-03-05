@@ -28,6 +28,7 @@ class Store extends FormRequest
             'role' => 'required',
             'password' => 'required|min:8',
             'password_confirmation' => 'required|same:password',
+            'avatar' => 'nullable|max:2048|mimes:jpg,jpeg,png,gif',
         ];
     }
 }

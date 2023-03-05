@@ -15,12 +15,16 @@
 <ul class="navbar-nav navbar-right">
     <li class="dropdown">
         <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-            <img alt="image" src="{{ asset('/assets/img/avatar/avatar-1.png') }}" class="rounded-circle mr-1">
+            @if(auth()->user()->avatar)
+                <img alt="image" src="{{ asset('storage/'.auth()->user()->avatar) }}" class="rounded-circle mr-1">
+            @else
+                <img alt="image" src="{{ asset('/assets/img/avatar/avatar-1.png') }}" class="rounded-circle mr-1">
+            @endif
             <div class="d-sm-none d-lg-inline-block">Hi, {{ auth()->user()->name; }}</div>
         </a>
         <div class="dropdown-menu dropdown-menu-right">
-            <a href="{{ route('profile') }}" class="dropdown-item has-icon">
-                <i class="far fa-user"></i> Profile
+            <a href="{{ route('profile') }}" class="dropdown-item has-icon {{ Route::is('profile*') ? 'active' : '' }}">
+                <i class="fas fa-user"></i> Profile
             </a>
             <form action="{{ route('logout') }}" method="POST">
                 @csrf

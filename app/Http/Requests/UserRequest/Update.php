@@ -28,6 +28,7 @@ class Update extends FormRequest
             'role' => 'required',
             'password' => 'nullable|min:8',
             'password_confirmation' => 'same:password',
+            'avatar' => 'nullable|max:2048|mimes:jpg,jpeg,png,gif',
         ];
     }
 }

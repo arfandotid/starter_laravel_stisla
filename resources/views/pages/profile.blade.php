@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'My Profile')
+@section('desc', 'On this page you can edit a your profile information.')
 
 @section('content')
 <div class="row">
@@ -90,6 +91,39 @@
                     </button>
                 </div>
             </form>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h4>Avatar</h4>
+                <div class="card-header-action">
+                    <form action="{{ route('remove-profile-avatar') }}" method="POST">
+                        @method("DELETE")
+                        @csrf
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-times"></i>
+                            Remove
+                        </button>
+                    </form>
+                </div>
+              </div>
+            <div class="card-body">
+                <form action="{{ route('change-profile-avatar') }}" method="POST" enctype="multipart/form-data">
+                    @method('PUT')
+                    @csrf
+                    @if(auth()->user()->avatar)
+                        <img alt="image" src="{{ asset('storage/'.auth()->user()->avatar) }}" class="rounded-circle img-fluid mb-3">
+                    @else
+                        <img alt="image" src="{{ asset('/assets/img/avatar/avatar-1.png') }}" class="rounded-circle w-100 mb-3">
+                    @endif
+                    <div class="clearfix"></div>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" name="avatar" id="avatar" onchange="return this.form.submit()">
+                        <label class="custom-file-label" for="avatar">Choose Avatar</label>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>

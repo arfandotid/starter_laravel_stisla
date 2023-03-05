@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Manage Users')
+@section('desc', ' On this page you can manage users. ')
 
 @section('content')
     <div class="card">
@@ -53,7 +54,7 @@
             ],
             columns: [
                 {data: 'id', name: 'id'},
-                {data: 'id', name: 'id'},
+                {data: 'avatar', name: 'avatar'},
                 {data: 'name', name: 'name'},
                 {data: 'email', name: 'username'},
                 {data: 'username', name: 'username'},
@@ -63,7 +64,12 @@
             columnDefs: [{
                 "targets": 1,
                 "render": function(data, type, row, meta) {
-                    return `<img alt="image" src="../assets/img/avatar/avatar-5.png" class="rounded-circle" width="35">`;
+                    let img = `assets/img/avatar/avatar-5.png`;
+                    if(data) {
+                        img = `storage/${data}`;
+                    }
+
+                    return `<img alt="image" src="{{ asset('/') }}${img}" class="rounded-circle" width="35">`;
                 }
             },{
                 "targets": 2,

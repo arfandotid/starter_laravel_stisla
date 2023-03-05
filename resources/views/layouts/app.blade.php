@@ -30,6 +30,8 @@
                         <h1>@yield('title')</h1>
                     </div>
                     <div class="section-body">
+                        <h2 class="section-title">@yield('title')</h2>
+                        <p class="section-lead">@yield('desc')</p>
                         @yield('content')
                     </div>
                 </section>

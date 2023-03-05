@@ -7,6 +7,7 @@ use App\Http\Requests\UserRequest\Update;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
@@ -44,6 +45,10 @@ class UserController extends Controller
             'username' => $request->username,
             'password' => Hash::make($request->password),
         ];
+
+        if ($request->hasFile('avatar')) {
+            $data['avatar'] = $request->file('avatar')->store('avatar', 'public');
+        }
 
         User::create($data);
 
@@ -83,6 +88,13 @@ class UserController extends Controller
             'role' => $request->role,
             'username' => $request->username,
         ];
+
+        if($request->hasFile('avatar') && $request->file('avatar')->isValid()){
+            $path = "avatar/";
+            $oldfile = $path.basename($user->avatar);
+            Storage::disk('public')->delete($oldfile);
+            $data['avatar'] = Storage::disk('public')->put($path, $request->file('avatar'));
+        }
 
         if($request->password){
             $data['password'] = Hash::make($request->password);
