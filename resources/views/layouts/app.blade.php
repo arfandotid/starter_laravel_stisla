@@ -12,7 +12,7 @@
 
 <body>
     <div id="app">
-        <div class="main-wrapper">
+        <div class="main-wrapper main-wrapper-1">
             <div class="navbar-bg"></div>
 
             <nav class="navbar navbar-expand-lg main-navbar">
@@ -30,6 +30,8 @@
                         <h1>@yield('title')</h1>
                     </div>
                     <div class="section-body">
+                        <h2 class="section-title">@yield('title')</h2>
+                        <p class="section-lead">@yield('desc')</p>
                         @yield('content')
                     </div>
                 </section>
