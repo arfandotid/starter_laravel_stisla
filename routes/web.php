@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,21 +16,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('pages.dashboard');
-});
-
-Route::get('/auth', function () {
     return view('pages.auth.login');
-})->name('login');
+})->middleware(['guest']);
 
-Route::get('/register', function () {
-    return view('pages.auth.register');
-})->name('register');
+Route::middleware(['auth', 'verified'])->group(function() {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/profile', [DashboardController::class, 'profile'])->name('profile');
+    Route::put('/change-profile-avatar', [DashboardController::class, 'changeAvatar'])->name('change-profile-avatar');
+    Route::delete('/remove-profile-avatar', [DashboardController::class, 'removeAvatar'])->name('remove-profile-avatar');
 
-Route::get('/forgot', function () {
-    return view('pages.auth.forgot');
-})->name('forgot');
-
-Route::get('/reset', function () {
-    return view('pages.auth.reset');
-})->name('reset');
+    Route::middleware(['can:admin'])->group(function() {
+        Route::resource('user', UserController::class);
+    });
+});
